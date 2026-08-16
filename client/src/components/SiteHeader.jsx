@@ -10,7 +10,10 @@ const SiteHeader = () => {
         className="p-2 flex items-center justify-between theme-transition"
         style={{ background: "var(--primary-dark)" }}
       >
-        <h1 className="text-3xl font-bold text-center" style={{ color: "#FFFFFF" }}>
+        <h1
+          className="text-3xl font-bold text-center"
+          style={{ color: "#FFFFFF" }}
+        >
           Mingo Chat App
         </h1>
 

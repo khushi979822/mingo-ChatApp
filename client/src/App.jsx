@@ -1,9 +1,10 @@
 import React from "react";
+import SiteHeader from "./components/SiteHeader";
 
 const App = () => {
   return (
     <>
-      <div className="bg-error">App</div>
+      <SiteHeader />
     </>
   );
 };

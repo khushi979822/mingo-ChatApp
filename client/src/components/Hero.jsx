@@ -3,9 +3,9 @@ import { motion } from "motion/react";
 import { FiDownload, FiArrowRight } from "react-icons/fi";
 
 const floatingCards = [
-  { id: 1, text: "Sarah just messaged you!", avatar: "S", color: "#25D366", top: "8%", right: "-8%", delay: 0 },
-  { id: 2, text: "Group: Weekend Trip 🏖️", avatar: "G", color: "#128C7E", top: "55%", right: "-12%", delay: 0.4 },
-  { id: 3, text: "Alex: On my way! 🚀", avatar: "A", color: "#25D366", top: "80%", left: "-5%", delay: 0.8 },
+  { id: 1, text: "Sarah just messaged you!", avatar: "S", top: "8%", right: "-8%", delay: 0 },
+  { id: 2, text: "Group: Weekend Trip 🏖️", avatar: "G", top: "55%", right: "-12%", delay: 0.4 },
+  { id: 3, text: "Alex: On my way! 🚀", avatar: "A", top: "80%", left: "-5%", delay: 0.8 },
 ];
 
 const chatMessages = [
@@ -17,28 +17,40 @@ const chatMessages = [
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden py-20 px-6 md:px-16 bg-[#F7F5F3]">
-      {/* Subtle background gradient blobs */}
+    <section
+      className="relative overflow-hidden py-20 px-6 md:px-16 theme-transition"
+      style={{ background: "var(--bg)" }}
+    >
+      {/* Background blobs */}
       <div
         className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-20 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #25D366 0%, transparent 70%)", transform: "translate(30%, -30%)" }}
+        style={{ background: "radial-gradient(circle, var(--primary) 0%, transparent 70%)", transform: "translate(30%, -30%)" }}
       />
       <div
         className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-10 pointer-events-none"
-        style={{ background: "radial-gradient(circle, #128C7E 0%, transparent 70%)", transform: "translate(-40%, 40%)" }}
+        style={{ background: "radial-gradient(circle, var(--primary-dark) 0%, transparent 70%)", transform: "translate(-40%, 40%)" }}
       />
 
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 relative z-10">
         {/* ── Left: Copy ── */}
         <div className="flex-1 text-center lg:text-left">
+
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-white border border-[#E5E0DA] rounded-full px-4 py-2 text-sm font-medium text-[#111827] shadow-sm mb-6"
+            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium shadow-sm mb-6 theme-transition"
+            style={{
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              color: "var(--text)",
+            }}
           >
-            <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+            <span
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ background: "var(--primary)" }}
+            />
             Now live — Mingo ChatApp
           </motion.div>
 
@@ -47,20 +59,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl xl:text-7xl font-extrabold text-[#111827] leading-tight tracking-tight mb-6"
+            className="text-5xl md:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight mb-6 theme-transition"
+            style={{ color: "var(--text)" }}
           >
             Chat Better,{" "}
-            <span
-              className="relative inline-block"
-              style={{
-                background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              Together
-            </span>
-            .
+            <span className="gradient-text relative inline-block">Together</span>.
           </motion.h1>
 
           {/* Subtitle */}
@@ -68,7 +71,8 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-500 max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed"
+            className="text-lg md:text-xl max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed theme-transition"
+            style={{ color: "var(--text-muted)" }}
           >
             Connect instantly with friends and groups through a fast, secure, and modern messaging experience.
           </motion.p>
@@ -81,18 +85,23 @@ export default function Hero() {
             className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
             <motion.button
-              whileHover={{ scale: 1.04, boxShadow: "0 12px 30px rgba(37,211,102,0.35)" }}
+              whileHover={{ scale: 1.04, boxShadow: "0 12px 30px var(--glow)" }}
               whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold text-base transition-all"
-              style={{ background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)" }}
+              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold text-base transition-all primary-glow"
+              style={{ background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)" }}
             >
               <FiDownload className="text-lg" />
               Download
             </motion.button>
             <motion.button
-              whileHover={{ scale: 1.04, backgroundColor: "#EEEBE7" }}
+              whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white border border-[#E5E0DA] text-[#111827] font-semibold text-base transition-all shadow-sm"
+              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold text-base transition-all shadow-sm theme-transition"
+              style={{
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                color: "var(--text)",
+              }}
             >
               Learn More
               <FiArrowRight className="text-lg" />
@@ -111,9 +120,9 @@ export default function Hero() {
               { label: "Messages/Day", value: "50M+" },
               { label: "Countries", value: "120+" },
             ].map((stat) => (
-              <div key={stat.label}>
-                <p className="text-2xl font-bold text-[#111827]">{stat.value}</p>
-                <p className="text-sm text-gray-400 mt-0.5">{stat.label}</p>
+              <div key={stat.label} className="theme-transition">
+                <p className="text-2xl font-bold" style={{ color: "var(--text)" }}>{stat.value}</p>
+                <p className="text-sm mt-0.5" style={{ color: "var(--text-muted)" }}>{stat.label}</p>
               </div>
             ))}
           </motion.div>
@@ -127,12 +136,11 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
             className="relative"
           >
-            {/* Phone frame */}
+            {/* Phone frame — always dark for realism */}
             <div
               className="relative w-64 md:w-72 rounded-[3rem] shadow-2xl overflow-hidden border-[6px] border-[#111827]"
               style={{ background: "#111827", boxShadow: "0 40px 80px rgba(17,24,39,0.25)" }}
             >
-              {/* Notch */}
               <div className="flex justify-center pt-3 pb-1 bg-[#111827]">
                 <div className="w-20 h-5 rounded-full bg-black" />
               </div>
@@ -183,7 +191,6 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Home bar */}
               <div className="flex justify-center py-2 bg-[#111827]">
                 <div className="w-24 h-1 rounded-full bg-gray-600" />
               </div>
@@ -193,8 +200,15 @@ export default function Hero() {
             {floatingCards.map((card) => (
               <motion.div
                 key={card.id}
-                className="absolute flex items-center gap-2.5 bg-white rounded-2xl px-3 py-2.5 shadow-lg border border-gray-100 min-w-[160px]"
-                style={{ top: card.top, right: card.right, left: card.left }}
+                className="absolute flex items-center gap-2.5 rounded-2xl px-3 py-2.5 shadow-lg min-w-[160px] theme-transition"
+                style={{
+                  top: card.top,
+                  right: card.right,
+                  left: card.left,
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  boxShadow: "var(--card-shadow)",
+                }}
                 initial={{ opacity: 0, scale: 0.7 }}
                 animate={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
                 transition={{
@@ -205,11 +219,11 @@ export default function Hero() {
               >
                 <div
                   className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                  style={{ background: card.color }}
+                  style={{ background: "linear-gradient(135deg, var(--primary), var(--primary-dark))" }}
                 >
                   {card.avatar}
                 </div>
-                <p className="text-xs font-medium text-[#111827] leading-tight">{card.text}</p>
+                <p className="text-xs font-medium leading-tight" style={{ color: "var(--text)" }}>{card.text}</p>
               </motion.div>
             ))}
           </motion.div>

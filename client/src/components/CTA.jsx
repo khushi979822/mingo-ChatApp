@@ -4,17 +4,20 @@ import { FiDownload, FiArrowRight } from "react-icons/fi";
 
 export default function CTA() {
   return (
-    <section className="py-20 px-6 md:px-16 bg-[#F7F5F3]">
+    <section
+      className="py-20 px-6 md:px-16 theme-transition"
+      style={{ background: "var(--bg)" }}
+    >
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative rounded-3xl overflow-hidden text-center px-8 py-20"
+          className="relative rounded-3xl overflow-hidden text-center px-8 py-20 primary-glow"
           style={{
-            background: "linear-gradient(135deg, #075E54 0%, #128C7E 40%, #25D366 100%)",
-            boxShadow: "0 30px 80px rgba(37,211,102,0.25)",
+            background: "linear-gradient(135deg, var(--primary-deep) 0%, var(--primary-dark) 40%, var(--primary) 100%)",
+            boxShadow: "0 30px 80px var(--glow)",
           }}
         >
           {/* Decorative blobs */}
@@ -70,7 +73,7 @@ export default function CTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-green-100 text-lg max-w-md mx-auto mb-10"
+            className="text-white/80 text-lg max-w-md mx-auto mb-10"
           >
             Join millions of users who chat securely and instantly on Mingo.
           </motion.p>
@@ -86,7 +89,8 @@ export default function CTA() {
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: "0 15px 35px rgba(0,0,0,0.25)" }}
               whileTap={{ scale: 0.97 }}
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white text-[#128C7E] font-bold text-base transition-all shadow-lg"
+              className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white font-bold text-base transition-all shadow-lg"
+              style={{ color: "var(--primary-dark)" }}
             >
               <FiDownload className="text-lg" />
               Download

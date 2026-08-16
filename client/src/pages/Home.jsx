@@ -8,7 +8,10 @@ import Footer from "../components/Footer";
 
 const Home = () => {
   return (
-    <div className="bg-[#F7F5F3]">
+    <div
+      className="theme-transition"
+      style={{ background: "var(--bg)", color: "var(--text)", minHeight: "100vh" }}
+    >
       <Hero />
       <FeaturedPreview />
       <FeatureGrid />

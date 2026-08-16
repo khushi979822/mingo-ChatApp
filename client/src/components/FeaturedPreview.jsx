@@ -25,22 +25,17 @@ const floatingPills = [
 function PhoneMockup({ children, label }) {
   return (
     <div className="relative w-52 md:w-60">
-      {/* Label */}
       <div className="text-center mb-3">
-        <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">{label}</span>
+        <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--text-muted)" }}>{label}</span>
       </div>
-      {/* Frame */}
       <div
         className="rounded-[2.5rem] border-[5px] border-[#222] overflow-hidden shadow-2xl"
         style={{ background: "#111827", boxShadow: "0 30px 60px rgba(0,0,0,0.2)" }}
       >
-        {/* Notch */}
         <div className="flex justify-center py-2 bg-[#111827]">
           <div className="w-16 h-4 rounded-full bg-black" />
         </div>
-        {/* Screen */}
         <div className="bg-[#ECE5DD] min-h-[440px] flex flex-col">
-          {/* Header */}
           <div className="flex items-center gap-2 px-3 py-2 bg-[#128C7E]">
             <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center text-white text-xs font-bold">G</div>
             <div>
@@ -48,9 +43,7 @@ function PhoneMockup({ children, label }) {
               <p className="text-green-200 text-[10px]">4 members</p>
             </div>
           </div>
-          {/* Messages */}
           <div className="flex-1 p-2 space-y-2">{children}</div>
-          {/* Input */}
           <div className="flex items-center gap-2 px-2 py-1.5 bg-[#F0F0F0] mx-2 mb-2 rounded-full">
             <span className="flex-1 text-[10px] text-gray-400">Message…</span>
             <div className="w-6 h-6 rounded-full bg-[#25D366] flex items-center justify-center">
@@ -60,7 +53,6 @@ function PhoneMockup({ children, label }) {
             </div>
           </div>
         </div>
-        {/* Home bar */}
         <div className="flex justify-center py-1.5 bg-[#111827]">
           <div className="w-16 h-0.5 rounded-full bg-gray-600" />
         </div>
@@ -96,7 +88,7 @@ function PollCard() {
               className="h-full rounded-full"
               style={{
                 width: `${[60, 25, 15][i]}%`,
-                background: "linear-gradient(90deg, #25D366, #128C7E)",
+                background: "linear-gradient(90deg, var(--primary), var(--primary-dark))",
               }}
             />
           </div>
@@ -109,7 +101,10 @@ function PollCard() {
 
 export default function FeaturedPreview() {
   return (
-    <section className="py-20 px-6 md:px-16 bg-[#F7F5F3]">
+    <section
+      className="py-20 px-6 md:px-16 theme-transition"
+      style={{ background: "var(--bg)" }}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Section label */}
         <motion.div
@@ -119,42 +114,54 @@ export default function FeaturedPreview() {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <span className="inline-block bg-[#25D366]/10 text-[#128C7E] text-sm font-semibold px-4 py-1.5 rounded-full mb-4">
+          <span
+            className="inline-block text-sm font-semibold px-4 py-1.5 rounded-full mb-4 theme-transition"
+            style={{ background: "var(--badge-bg)", color: "var(--badge-text)" }}
+          >
             See it in action
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#111827] tracking-tight">
+          <h2
+            className="text-4xl md:text-5xl font-extrabold tracking-tight theme-transition"
+            style={{ color: "var(--text)" }}
+          >
             Everything your group needs
           </h2>
-          <p className="text-gray-400 mt-3 text-lg max-w-lg mx-auto">
+          <p className="mt-3 text-lg max-w-lg mx-auto theme-transition" style={{ color: "var(--text-muted)" }}>
             Polls, mentions, group chats — all in one beautiful app.
           </p>
         </motion.div>
 
-        {/* Big beige card */}
+        {/* Big card */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative bg-[#F2E9DD] rounded-3xl p-8 md:p-14 overflow-hidden"
-          style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.06)" }}
+          className="relative rounded-3xl p-8 md:p-14 overflow-hidden theme-transition"
+          style={{ background: "var(--surface-alt)", boxShadow: "var(--card-shadow)" }}
         >
-          {/* Background circles */}
+          {/* Background orbs */}
           <div
             className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-30 pointer-events-none"
-            style={{ background: "radial-gradient(circle, #25D366 0%, transparent 70%)", transform: "translate(40%, -40%)" }}
+            style={{ background: "radial-gradient(circle, var(--primary) 0%, transparent 70%)", transform: "translate(40%, -40%)" }}
           />
           <div
             className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-20 pointer-events-none"
-            style={{ background: "radial-gradient(circle, #128C7E 0%, transparent 70%)", transform: "translate(-40%, 40%)" }}
+            style={{ background: "radial-gradient(circle, var(--primary-dark) 0%, transparent 70%)", transform: "translate(-40%, 40%)" }}
           />
 
           {/* Floating pills */}
           {floatingPills.map((pill) => (
             <motion.div
               key={pill.label}
-              className="absolute hidden lg:flex items-center gap-2 bg-white rounded-xl px-3 py-2 shadow-md text-xs font-medium text-[#111827] border border-gray-100"
-              style={{ top: pill.top, left: pill.left, right: pill.right, bottom: pill.bottom }}
+              className="absolute hidden lg:flex items-center gap-2 rounded-xl px-3 py-2 shadow-md text-xs font-medium theme-transition"
+              style={{
+                top: pill.top, left: pill.left, right: pill.right, bottom: pill.bottom,
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                color: "var(--text)",
+                boxShadow: "var(--card-shadow)",
+              }}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1, y: [0, -5, 0] }}
               viewport={{ once: true }}
@@ -169,9 +176,8 @@ export default function FeaturedPreview() {
             </motion.div>
           ))}
 
-          {/* Phones container */}
+          {/* Phones */}
           <div className="flex flex-col sm:flex-row justify-center items-end gap-6 md:gap-10 relative z-10">
-            {/* Left phone — Group + Poll */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -180,16 +186,11 @@ export default function FeaturedPreview() {
             >
               <PhoneMockup label="Group Chat">
                 {leftPhoneMessages.map((msg, i) =>
-                  msg.isPoll ? (
-                    <PollCard key={i} />
-                  ) : (
-                    <ChatBubble key={i} {...msg} />
-                  )
+                  msg.isPoll ? <PollCard key={i} /> : <ChatBubble key={i} {...msg} />
                 )}
               </PhoneMockup>
             </motion.div>
 
-            {/* Right phone — Group conversation */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}

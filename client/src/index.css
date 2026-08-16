@@ -8,7 +8,32 @@
 @import "flyonui/variants.css";
 @source "../node_modules/flyonui/flyonui.js";
 
-/* ── Global resets ── */
+/* ══════════════════════════════════════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES — Default (Light) values
+   These are overridden in JS via ThemeContext for each theme.
+   ══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  --bg:            #F7F5F3;
+  --surface:       #FFFFFF;
+  --surface-alt:   #F2E9DD;
+  --border:        #E5E0DA;
+  --text:          #111827;
+  --text-muted:    #6B7280;
+  --primary:       #25D366;
+  --primary-dark:  #128C7E;
+  --primary-deep:  #075E54;
+  --card-shadow:   0 4px 20px rgba(0,0,0,0.06);
+  --hover-bg:      #EEEBE7;
+  --footer-bg:     #111827;
+  --footer-text:   #FFFFFF;
+  --glow:          rgba(37,211,102,0.15);
+  --badge-bg:      rgba(37,211,102,0.10);
+  --badge-text:    #128C7E;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   GLOBAL RESETS & BASE
+   ══════════════════════════════════════════════════════════════════════════════ */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -19,12 +44,94 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: #F7F5F3;
+  background-color: var(--bg);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* ── Float animation for notification cards ── */
+/* ══════════════════════════════════════════════════════════════════════════════
+   THEME UTILITY CLASSES  (use these instead of hardcoded Tailwind colors)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* Backgrounds */
+.bg-theme          { background-color: var(--bg); }
+.bg-surface        { background-color: var(--surface); }
+.bg-surface-alt    { background-color: var(--surface-alt); }
+.bg-primary-theme  { background-color: var(--primary); }
+
+/* Text */
+.text-theme        { color: var(--text); }
+.text-muted-theme  { color: var(--text-muted); }
+.text-primary-theme{ color: var(--primary); }
+
+/* Border */
+.border-theme      { border-color: var(--border); }
+
+/* Card shadow utility */
+.shadow-theme      { box-shadow: var(--card-shadow); }
+
+/* Glow effect for premium themes */
+.glow-primary      { box-shadow: 0 0 24px var(--glow); }
+
+/* Gradient text using primary */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Primary gradient background */
+.bg-primary-gradient {
+  background: linear-gradient(135deg, var(--primary-deep) 0%, var(--primary-dark) 40%, var(--primary) 100%);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   SMOOTH THEME TRANSITIONS (applied to all themed elements)
+   ══════════════════════════════════════════════════════════════════════════════ */
+.theme-transition {
+  transition: background-color 0.5s ease,
+              color 0.5s ease,
+              border-color 0.5s ease,
+              box-shadow 0.5s ease;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   HALLOWEEN GLOW EFFECT
+   ══════════════════════════════════════════════════════════════════════════════ */
+[data-theme="halloween"] .primary-glow {
+  box-shadow: 0 0 30px rgba(255, 122, 0, 0.4), 0 0 60px rgba(255, 122, 0, 0.15);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   SPOTIFY GLOW EFFECT
+   ══════════════════════════════════════════════════════════════════════════════ */
+[data-theme="spotify"] .primary-glow {
+  box-shadow: 0 0 30px rgba(29, 185, 84, 0.4), 0 0 60px rgba(29, 185, 84, 0.15);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   DARK GLASS EFFECT
+   ══════════════════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] .glass-card,
+[data-theme="black"] .glass-card {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   GHIBLI DREAMY PASTEL SHADOWS
+   ══════════════════════════════════════════════════════════════════════════════ */
+[data-theme="ghibli"] .shadow-theme {
+  box-shadow: 0 8px 32px rgba(106, 168, 79, 0.15), 0 2px 8px rgba(106, 168, 79, 0.08);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   FLOAT ANIMATION
+   ══════════════════════════════════════════════════════════════════════════════ */
 @keyframes floatY {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-8px); }
@@ -34,15 +141,16 @@ body {
   animation: floatY 3s ease-in-out infinite;
 }
 
-/* ── Gradient text utility ── */
-.gradient-text {
-  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ══════════════════════════════════════════════════════════════════════════════
+   SCROLLBAR STYLING
+   ══════════════════════════════════════════════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 6px;
 }
-
-/* ── Smooth link hover ── */
-a {
-  transition: color 0.2s ease;
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
 }

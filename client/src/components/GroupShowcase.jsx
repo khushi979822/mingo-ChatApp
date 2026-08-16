@@ -10,9 +10,9 @@ const bullets = [
 ];
 
 const notifications = [
-  { text: "Alex joined the group", avatar: "A", color: "#25D366", top: "8%", right: "-6%", delay: 0 },
-  { text: "Poll: 8 votes so far!", avatar: "📊", color: "#128C7E", top: "48%", right: "-10%", delay: 0.4 },
-  { text: "@all: Meeting in 5 mins!", avatar: "🔔", color: "#075E54", bottom: "12%", right: "-6%", delay: 0.8 },
+  { text: "Alex joined the group", avatar: "A", top: "8%", right: "-6%", delay: 0 },
+  { text: "Poll: 8 votes so far!", avatar: "📊", top: "48%", right: "-10%", delay: 0.4 },
+  { text: "@all: Meeting in 5 mins!", avatar: "🔔", bottom: "12%", right: "-6%", delay: 0.8 },
 ];
 
 const groupMessages = [
@@ -25,11 +25,17 @@ const groupMessages = [
 
 export default function GroupShowcase() {
   return (
-    <section className="py-20 px-6 md:px-16 bg-[#F7F5F3]">
+    <section
+      className="py-20 px-6 md:px-16 theme-transition"
+      style={{ background: "var(--bg)" }}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Divider accent */}
         <div className="flex justify-center mb-16">
-          <div className="w-16 h-1 rounded-full" style={{ background: "linear-gradient(90deg, #25D366, #128C7E)" }} />
+          <div
+            className="w-16 h-1 rounded-full"
+            style={{ background: "linear-gradient(90deg, var(--primary), var(--primary-dark))" }}
+          />
         </div>
 
         <div className="flex flex-col lg:flex-row items-center gap-16">
@@ -41,28 +47,29 @@ export default function GroupShowcase() {
             transition={{ duration: 0.7 }}
             className="flex-1"
           >
-            <span className="inline-block bg-[#25D366]/10 text-[#128C7E] text-sm font-semibold px-4 py-1.5 rounded-full mb-5">
+            <span
+              className="inline-block text-sm font-semibold px-4 py-1.5 rounded-full mb-5 theme-transition"
+              style={{ background: "var(--badge-bg)", color: "var(--badge-text)" }}
+            >
               Group Chats
             </span>
 
-            <h2 className="text-4xl md:text-5xl font-extrabold text-[#111827] tracking-tight leading-tight mb-5">
+            <h2
+              className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-5 theme-transition"
+              style={{ color: "var(--text)" }}
+            >
               Stay in sync with{" "}
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #25D366, #128C7E)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                your people
-              </span>
+              <span className="gradient-text">your people</span>
             </h2>
 
-            <p className="text-gray-400 text-lg leading-relaxed mb-8 max-w-md">
+            <p
+              className="text-lg leading-relaxed mb-8 max-w-md theme-transition"
+              style={{ color: "var(--text-muted)" }}
+            >
               Whether it's your work squad, family group, or friend circle — Mingo keeps everyone on the same page with powerful group tools.
             </p>
 
-            {/* Bullet points */}
+            {/* Bullets */}
             <ul className="space-y-4">
               {bullets.map((bullet, i) => (
                 <motion.li
@@ -74,21 +81,26 @@ export default function GroupShowcase() {
                   className="flex items-center gap-4"
                 >
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-base flex-shrink-0"
-                    style={{ background: "#F2E9DD" }}
+                    className="w-10 h-10 rounded-xl flex items-center justify-center text-base flex-shrink-0 theme-transition"
+                    style={{ background: "var(--surface-alt)" }}
                   >
                     {bullet.icon}
                   </div>
-                  <span className="text-[#111827] font-medium text-sm">{bullet.text}</span>
+                  <span
+                    className="font-medium text-sm theme-transition"
+                    style={{ color: "var(--text)" }}
+                  >
+                    {bullet.text}
+                  </span>
                 </motion.li>
               ))}
             </ul>
 
             <motion.button
-              whileHover={{ scale: 1.04, boxShadow: "0 12px 30px rgba(37,211,102,0.3)" }}
+              whileHover={{ scale: 1.04, boxShadow: "0 12px 30px var(--glow)" }}
               whileTap={{ scale: 0.97 }}
-              className="mt-10 flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold text-base transition-all"
-              style={{ background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)" }}
+              className="mt-10 flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold text-base transition-all primary-glow"
+              style={{ background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)" }}
             >
               Create a Group
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,28 +123,24 @@ export default function GroupShowcase() {
                 className="w-64 md:w-72 rounded-[3rem] border-[6px] border-[#111827] overflow-hidden shadow-2xl"
                 style={{ boxShadow: "0 40px 80px rgba(17,24,39,0.2)" }}
               >
-                {/* Notch */}
                 <div className="flex justify-center py-3 bg-[#111827]">
                   <div className="w-20 h-5 rounded-full bg-black" />
                 </div>
 
-                {/* Screen */}
                 <div className="bg-[#ECE5DD] min-h-[520px] flex flex-col">
-                  {/* Header */}
                   <div className="flex items-center gap-3 px-4 py-3 bg-[#128C7E]">
                     <div className="w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center text-white font-bold text-sm">T</div>
                     <div>
                       <p className="text-white font-semibold text-sm">Team Mingo 🚀</p>
                       <p className="text-green-200 text-xs">5 members online</p>
                     </div>
-                    <div className="ml-auto flex gap-2">
+                    <div className="ml-auto">
                       <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
                         <span className="text-white text-[8px]">📞</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Messages */}
                   <div className="flex-1 p-3 space-y-2.5 overflow-hidden">
                     {groupMessages.map((msg, i) => (
                       <motion.div
@@ -145,7 +153,9 @@ export default function GroupShowcase() {
                       >
                         <div
                           className={`px-3 py-2 rounded-2xl text-xs max-w-[78%] shadow-sm ${
-                            msg.isMe ? "bg-[#DCF8C6] text-[#111827] rounded-tr-none" : "bg-white text-[#111827] rounded-tl-none"
+                            msg.isMe
+                              ? "bg-[#DCF8C6] text-[#111827] rounded-tr-none"
+                              : "bg-white text-[#111827] rounded-tl-none"
                           }`}
                         >
                           {!msg.isMe && msg.name && (
@@ -157,7 +167,6 @@ export default function GroupShowcase() {
                     ))}
                   </div>
 
-                  {/* Input */}
                   <div className="flex items-center gap-2 px-3 py-2 bg-[#F0F0F0] m-2 rounded-full">
                     <span className="flex-1 text-xs text-gray-400">Message Team Mingo…</span>
                     <div className="w-7 h-7 rounded-full bg-[#25D366] flex items-center justify-center">
@@ -168,7 +177,6 @@ export default function GroupShowcase() {
                   </div>
                 </div>
 
-                {/* Home bar */}
                 <div className="flex justify-center py-2 bg-[#111827]">
                   <div className="w-24 h-1 rounded-full bg-gray-600" />
                 </div>
@@ -178,8 +186,15 @@ export default function GroupShowcase() {
               {notifications.map((notif) => (
                 <motion.div
                   key={notif.text}
-                  className="absolute flex items-center gap-2.5 bg-white rounded-2xl px-3 py-2.5 shadow-lg border border-gray-100 min-w-[170px]"
-                  style={{ top: notif.top, right: notif.right, bottom: notif.bottom }}
+                  className="absolute flex items-center gap-2.5 rounded-2xl px-3 py-2.5 shadow-lg min-w-[170px] theme-transition"
+                  style={{
+                    top: notif.top,
+                    right: notif.right,
+                    bottom: notif.bottom,
+                    background: "var(--surface)",
+                    border: "1px solid var(--border)",
+                    boxShadow: "var(--card-shadow)",
+                  }}
                   initial={{ opacity: 0, scale: 0.7 }}
                   whileInView={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
                   viewport={{ once: true }}
@@ -191,11 +206,11 @@ export default function GroupShowcase() {
                 >
                   <div
                     className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                    style={{ background: notif.color }}
+                    style={{ background: "linear-gradient(135deg, var(--primary), var(--primary-dark))" }}
                   >
                     {notif.avatar}
                   </div>
-                  <p className="text-xs font-medium text-[#111827] leading-tight">{notif.text}</p>
+                  <p className="text-xs font-medium leading-tight" style={{ color: "var(--text)" }}>{notif.text}</p>
                 </motion.div>
               ))}
             </div>

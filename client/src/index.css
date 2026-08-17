@@ -51,41 +51,12 @@ body {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   THEME UTILITY CLASSES  (use these instead of hardcoded Tailwind colors)
-   ══════════════════════════════════════════════════════════════════════════════ */
-
-/* Backgrounds */
-.bg-theme          { background-color: var(--bg); }
-.bg-surface        { background-color: var(--surface); }
-.bg-surface-alt    { background-color: var(--surface-alt); }
-.bg-primary-theme  { background-color: var(--primary); }
-
-/* Text */
-.text-theme        { color: var(--text); }
-.text-muted-theme  { color: var(--text-muted); }
-.text-primary-theme{ color: var(--primary); }
-
-/* Border */
-.border-theme      { border-color: var(--border); }
-
-/* Card shadow utility */
-.shadow-theme      { box-shadow: var(--card-shadow); }
-
-/* Glow effect for premium themes */
-.glow-primary      { box-shadow: 0 0 24px var(--glow); }
-
 /* Gradient text using primary */
 .gradient-text {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-/* Primary gradient background */
-.bg-primary-gradient {
-  background: linear-gradient(135deg, var(--primary-deep) 0%, var(--primary-dark) 40%, var(--primary) 100%);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -112,34 +83,7 @@ body {
   box-shadow: 0 0 30px rgba(29, 185, 84, 0.4), 0 0 60px rgba(29, 185, 84, 0.15);
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   DARK GLASS EFFECT
-   ══════════════════════════════════════════════════════════════════════════════ */
-[data-theme="dark"] .glass-card,
-[data-theme="black"] .glass-card {
-  backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   GHIBLI DREAMY PASTEL SHADOWS
-   ══════════════════════════════════════════════════════════════════════════════ */
-[data-theme="ghibli"] .shadow-theme {
-  box-shadow: 0 8px 32px rgba(106, 168, 79, 0.15), 0 2px 8px rgba(106, 168, 79, 0.08);
-}
-
-/* ══════════════════════════════════════════════════════════════════════════════
-   FLOAT ANIMATION
-   ══════════════════════════════════════════════════════════════════════════════ */
-@keyframes floatY {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
-}
-
-.float-anim {
-  animation: floatY 3s ease-in-out infinite;
-}
 
 /* ══════════════════════════════════════════════════════════════════════════════
    SCROLLBAR STYLING

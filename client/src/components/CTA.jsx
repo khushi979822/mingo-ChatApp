@@ -16,18 +16,25 @@ export default function CTA() {
           transition={{ duration: 0.7 }}
           className="relative rounded-3xl overflow-hidden text-center px-8 py-20 primary-glow"
           style={{
-            background: "linear-gradient(135deg, var(--primary-deep) 0%, var(--primary-dark) 40%, var(--primary) 100%)",
+            background:
+              "linear-gradient(135deg, var(--primary-deep) 0%, var(--primary-dark) 40%, var(--primary) 100%)",
             boxShadow: "0 30px 80px var(--glow)",
           }}
         >
           {/* Decorative blobs */}
           <div
             className="absolute top-0 left-0 w-64 h-64 rounded-full opacity-20 pointer-events-none"
-            style={{ background: "radial-gradient(circle, #fff 0%, transparent 70%)", transform: "translate(-40%, -40%)" }}
+            style={{
+              background: "radial-gradient(circle, #fff 0%, transparent 70%)",
+              transform: "translate(-40%, -40%)",
+            }}
           />
           <div
             className="absolute bottom-0 right-0 w-80 h-80 rounded-full opacity-10 pointer-events-none"
-            style={{ background: "radial-gradient(circle, #fff 0%, transparent 70%)", transform: "translate(40%, 40%)" }}
+            style={{
+              background: "radial-gradient(circle, #fff 0%, transparent 70%)",
+              transform: "translate(40%, 40%)",
+            }}
           />
 
           {/* Avatar cluster */}
@@ -87,7 +94,10 @@ export default function CTA() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 15px 35px rgba(0,0,0,0.25)" }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 15px 35px rgba(0,0,0,0.25)",
+              }}
               whileTap={{ scale: 0.97 }}
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white font-bold text-base transition-all shadow-lg"
               style={{ color: "var(--primary-dark)" }}
@@ -96,7 +106,10 @@ export default function CTA() {
               Download
             </motion.button>
             <motion.button
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.2)" }}
+              whileHover={{
+                scale: 1.05,
+                backgroundColor: "rgba(255,255,255,0.2)",
+              }}
               whileTap={{ scale: 0.97 }}
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white/10 border border-white/30 text-white font-semibold text-base transition-all backdrop-blur-sm"
             >

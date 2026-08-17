@@ -5,22 +5,26 @@ const features = [
   {
     icon: "💬",
     title: "Instant Messaging",
-    description: "Send text, images, and files to anyone in real time. Experience the smoothest chat you've ever had.",
+    description:
+      "Send text, images, and files to anyone in real time. Experience the smoothest chat you've ever had.",
   },
   {
     icon: "👥",
     title: "Group Chats",
-    description: "Create groups for work, family, or friends. Add up to 256 members, assign admins, and more.",
+    description:
+      "Create groups for work, family, or friends. Add up to 256 members, assign admins, and more.",
   },
   {
     icon: "📊",
     title: "Smart Polls",
-    description: "Make decisions fast. Create polls in any group, track votes in real time, and act on results instantly.",
+    description:
+      "Make decisions fast. Create polls in any group, track votes in real time, and act on results instantly.",
   },
   {
     icon: "🔒",
     title: "End-to-End Privacy",
-    description: "Every message is encrypted end-to-end. Your conversations stay between you — nobody else can read them.",
+    description:
+      "Every message is encrypted end-to-end. Your conversations stay between you — nobody else can read them.",
   },
 ];
 
@@ -41,7 +45,10 @@ export default function FeatureGrid() {
         >
           <span
             className="inline-block text-sm font-semibold px-4 py-1.5 rounded-full mb-4 theme-transition"
-            style={{ background: "var(--badge-bg)", color: "var(--badge-text)" }}
+            style={{
+              background: "var(--badge-bg)",
+              color: "var(--badge-text)",
+            }}
           >
             Why Mingo?
           </span>
@@ -51,7 +58,10 @@ export default function FeatureGrid() {
           >
             Built for real connections
           </h2>
-          <p className="mt-3 text-lg max-w-lg mx-auto theme-transition" style={{ color: "var(--text-muted)" }}>
+          <p
+            className="mt-3 text-lg max-w-lg mx-auto theme-transition"
+            style={{ color: "var(--text-muted)" }}
+          >
             Everything you need to stay close to the people who matter most.
           </p>
         </motion.div>
@@ -107,7 +117,12 @@ export default function FeatureGrid() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </div>
             </motion.div>

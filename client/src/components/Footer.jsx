@@ -48,14 +48,18 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-5">
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-extrabold text-lg"
-                style={{ background: "linear-gradient(135deg, var(--primary), var(--primary-dark))" }}
+                style={{
+                  background:
+                    "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                }}
               >
                 M
               </div>
               <span className="text-xl font-extrabold">Mingo ChatApp</span>
             </div>
             <p className="text-sm leading-relaxed mb-6 opacity-60">
-              A fast, secure, and modern messaging experience for everyone. Stay connected, always.
+              A fast, secure, and modern messaging experience for everyone. Stay
+              connected, always.
             </p>
             {/* Social icons */}
             <div className="flex items-center gap-3">
@@ -64,9 +68,15 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  whileHover={{ scale: 1.15, backgroundColor: "var(--primary)" }}
+                  whileHover={{
+                    scale: 1.15,
+                    backgroundColor: "var(--primary)",
+                  }}
                   className="w-9 h-9 rounded-xl flex items-center justify-center opacity-60 hover:opacity-100 transition-all duration-200"
-                  style={{ background: "rgba(255,255,255,0.10)", color: "var(--footer-text)" }}
+                  style={{
+                    background: "rgba(255,255,255,0.10)",
+                    color: "var(--footer-text)",
+                  }}
                 >
                   <Icon size={16} />
                 </motion.a>
@@ -84,7 +94,9 @@ export default function Footer() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: gi * 0.08 }}
               >
-                <p className="text-xs font-bold uppercase tracking-widest mb-4 opacity-50">{group.title}</p>
+                <p className="text-xs font-bold uppercase tracking-widest mb-4 opacity-50">
+                  {group.title}
+                </p>
                 <ul className="space-y-3">
                   {group.links.map((link) => (
                     <li key={link}>
@@ -112,7 +124,11 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-6">
             {["Privacy", "Terms", "Cookies"].map((item) => (
-              <a key={item} href="#" className="text-sm opacity-40 hover:opacity-80 transition-opacity duration-200">
+              <a
+                key={item}
+                href="#"
+                className="text-sm opacity-40 hover:opacity-80 transition-opacity duration-200"
+              >
                 {item}
               </a>
             ))}

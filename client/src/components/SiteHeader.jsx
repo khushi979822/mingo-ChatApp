@@ -14,7 +14,7 @@ const SiteHeader = () => {
           className="text-3xl font-bold text-center"
           style={{ color: "#FFFFFF" }}
         >
-          Mingo Chat App
+          Mingo ChatApp
         </h1>
 
         <select

@@ -5,6 +5,7 @@ const Chatting = ({ selectedFriend, currentUser }) => {
   const [filteredChatData, setFilteredChatData] = useState([]);
   const [receiver, setReceiver] = useState("");
   const [sender, setSender] = useState("");
+
   //console.log(selectedFriend);
   //console.log(currentUser);
 

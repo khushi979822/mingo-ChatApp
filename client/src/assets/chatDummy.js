@@ -91,7 +91,7 @@ export const CHATS = [
   },
 ];
 
-// ─── Message Conversations (keyed by chatId) ─────────────────────────────────
+// ─── Message Conversationsn ──
 export const MESSAGES = {
   airi: [
     {

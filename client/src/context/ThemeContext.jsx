@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-// ── Theme palette definitions ────────────────────────────────────────────────
+// ── Theme palette definitions ──
 export const THEMES = {
   light: {
     "--bg": "#F7F5F3",

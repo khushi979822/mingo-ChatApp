@@ -10,29 +10,6 @@ import { motion } from "motion/react";
 const MessageBubble = ({ message, index }) => {
   const { isMe, text, time, status } = message;
 
-  const checkIcon = (filled) => (
-    <svg width="14" height="10" viewBox="0 0 16 11" fill="none" style={{ display: "inline" }}>
-      <path
-        d="M1 5.5L5.5 10L15 1"
-        stroke={filled ? "var(--primary)" : "currentColor"}
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        opacity={filled ? 1 : 0.5}
-      />
-      {status === "read" && (
-        <path
-          d="M5 5.5L9.5 10L19 1"
-          stroke="var(--primary)"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          transform="translate(-4, 0)"
-        />
-      )}
-    </svg>
-  );
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 10, scale: 0.97 }}
@@ -54,7 +31,6 @@ const MessageBubble = ({ message, index }) => {
             : "var(--surface)",
           color: isMe ? "#ffffff" : "var(--text)",
           boxShadow: "var(--card-shadow)",
-          // Subtle border on incoming for separation
           border: isMe ? "none" : "1px solid var(--border)",
         }}
       >
@@ -64,9 +40,7 @@ const MessageBubble = ({ message, index }) => {
         </p>
 
         {/* Time + status row */}
-        <div
-          className={`flex items-center gap-1 mt-1 ${isMe ? "justify-end" : "justify-end"}`}
-        >
+        <div className="flex items-center gap-1 mt-1 justify-end">
           <span
             className="text-[10px] leading-none"
             style={{

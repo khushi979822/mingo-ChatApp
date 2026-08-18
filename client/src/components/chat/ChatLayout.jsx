@@ -4,7 +4,7 @@ import { FiMessageCircle, FiMenu } from "react-icons/fi";
 import Sidebar from "./Sidebar";
 import ChatHeader from "./ChatHeader";
 import MessageList from "./MessageList";
-import { CHATS, MESSAGES, CURRENT_USER } from "../../assets/chatDummy";
+import { CHATS, MESSAGES } from "../../assets/chatDummy";
 
 /**
  * ChatLayout — the main WhatsApp-style two-panel layout.

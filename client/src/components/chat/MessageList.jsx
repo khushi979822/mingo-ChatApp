@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
 

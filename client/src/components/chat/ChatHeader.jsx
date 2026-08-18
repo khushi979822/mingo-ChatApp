@@ -8,7 +8,6 @@ import {
   FiSearch,
   FiUser,
   FiBell,
-  FiBellOff,
   FiTrash2,
 } from "react-icons/fi";
 

@@ -150,14 +150,14 @@ export const THEMES = {
 
 const STORAGE_KEY = "mingo-theme";
 
-// ── Context ──────────────────────────────────────────────────────────────────
+// ── Context ───
 const ThemeContext = createContext({
   theme: "light",
   setTheme: () => {},
   themeVars: THEMES.light,
 });
 
-// ── Provider ─────────────────────────────────────────────────────────────────
+// ── Provider ──
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState(() => {
     return localStorage.getItem(STORAGE_KEY) || "light";

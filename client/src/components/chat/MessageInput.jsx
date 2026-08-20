@@ -152,40 +152,43 @@ const MessageInput = ({ onSend }) => {
         />
 
         {/* Mic or Send button */}
-        {text.trim() ? (
-          <motion.button
-            key="send"
-            initial={{ scale: 0.6, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.6, opacity: 0 }}
-            whileHover={{ scale: 1.1, boxShadow: "0 4px 16px var(--glow)" }}
-            whileTap={{ scale: 0.92 }}
-            onClick={handleSend}
-            className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition-all duration-150"
-            style={{
-              background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
-              color: "#ffffff",
-            }}
-            title="Send message"
-            id="send-message-btn"
-          >
-            <FiSend size={16} />
-          </motion.button>
-        ) : (
-          <motion.button
-            key="mic"
-            initial={{ scale: 0.6, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 0.9 }}
-            className="flex-shrink-0 p-1.5 rounded-full cursor-pointer"
-            style={{ color: "var(--text-muted)" }}
-            title="Voice message"
-            id="voice-message-btn"
-          >
-            <FiMic size={20} />
-          </motion.button>
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          {text.trim() ? (
+            <motion.button
+              key="send"
+              initial={{ scale: 0.6, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.6, opacity: 0 }}
+              whileHover={{ scale: 1.1, boxShadow: "0 4px 16px var(--glow)" }}
+              whileTap={{ scale: 0.92 }}
+              onClick={handleSend}
+              className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition-all duration-150"
+              style={{
+                background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
+                color: "#ffffff",
+              }}
+              title="Send message"
+              id="send-message-btn"
+            >
+              <FiSend size={16} />
+            </motion.button>
+          ) : (
+            <motion.button
+              key="mic"
+              initial={{ scale: 0.6, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.6, opacity: 0 }}
+              whileHover={{ scale: 1.15 }}
+              whileTap={{ scale: 0.9 }}
+              className="flex-shrink-0 p-1.5 rounded-full cursor-pointer"
+              style={{ color: "var(--text-muted)" }}
+              title="Voice message"
+              id="voice-message-btn"
+            >
+              <FiMic size={20} />
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Hint text */}

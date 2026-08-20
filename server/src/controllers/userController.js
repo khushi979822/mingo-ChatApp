@@ -8,7 +8,7 @@ export const getAllUsers = async (req, res, next) => {
       "-password",
     );
 
-    res.status(200).json({ data: users });
+    res.status(200).json({ success: true, data: users });
   } catch (error) {
     next(error);
   }
@@ -36,13 +36,14 @@ export const updateProfile = async (req, res, next) => {
       currentUser._id,
       {
         ...(fullName && { fullName }),
-        ...(email && { email }),
+        ...(email && { email: email.toLowerCase() }),
         ...(mobileNumber !== undefined && { mobileNumber }),
       },
       { new: true },
     ).select("-password");
 
     res.status(200).json({
+      success: true,
       message: "Profile updated successfully",
       data: updatedUser,
     });

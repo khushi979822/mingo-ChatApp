@@ -1,15 +1,13 @@
 import Message from "../models/messageModel.js";
 
-export const SendMessage = async (req, res) => {
+// ── Send a message ────────────────────────────────────────────────────────────
+export const SendMessage = async (req, res, next) => {
   try {
     const { receiverID, message } = req.body;
     const currentUser = req.user;
 
-    console.log("Receiver ID:", receiverID);
-    console.log("Message:", message);
-
     if (!receiverID || !message) {
-      const error = new Error("All fields required");
+      const error = new Error("Receiver ID and message are required");
       error.statusCode = 400;
       return next(error);
     }
@@ -19,16 +17,19 @@ export const SendMessage = async (req, res) => {
       receiverId: receiverID,
       message,
     });
-    res
-      .status(201)
-      .json({ message: "Message sent successfully", data: newMessage });
+
+    res.status(201).json({
+      success: true,
+      message: "Message sent successfully",
+      data: newMessage,
+    });
   } catch (error) {
-    console.log(error.message);
-    next();
+    next(error);
   }
 };
 
-export const GetMessages = async (req, res) => {
+// ── Get messages between two users ────────────────────────────────────────────
+export const GetMessages = async (req, res, next) => {
   try {
     const { friendId } = req.params;
     const currentUser = req.user;
@@ -39,9 +40,9 @@ export const GetMessages = async (req, res) => {
         { senderId: friendId, receiverId: currentUser._id },
       ],
     }).sort({ createdAt: 1 });
-    res.status(200).json({ data: messages });
+
+    res.status(200).json({ success: true, data: messages });
   } catch (error) {
-    console.log(error.message);
-    next();
+    next(error);
   }
 };

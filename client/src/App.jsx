@@ -7,29 +7,55 @@ import Chat from "./pages/Chat";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import { ChatProvider } from "./context/ChatContext";
 
 const App = () => {
   return (
     <>
-      <SiteHeader />
       <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* ── Public routes with site header ── */}
+        <Route
+          path="/"
+          element={
+            <>
+              <SiteHeader />
+              <Home />
+            </>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <>
+              <SiteHeader />
+              <Login />
+            </>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <>
+              <SiteHeader />
+              <Register />
+            </>
+          }
+        />
 
-        {/* Protected route — only accessible when logged in */}
+        {/* ── Protected chat route — no site header, full screen ── */}
         <Route
           path="/chat"
           element={
             <ProtectedRoute>
-              <Chat />
+              <ChatProvider>
+                <Chat />
+              </ChatProvider>
             </ProtectedRoute>
           }
         />
 
-        {/* Fallback */}
-        <Route path="/404" element={<NotFound />} />
+        {/* ── Fallback ── */}
+        <Route path="/404" element={<><SiteHeader /><NotFound /></>} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
     </>

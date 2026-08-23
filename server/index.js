@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import http from "http";
+import { Server } from "socket.io";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -9,6 +11,7 @@ import morgan from "morgan";
 import connectDB from "./src/config/db.js";
 import authRouter from "./src/routers/authRouter.js";
 import userRouter from "./src/routers/userRouter.js";
+import { initSocket } from "./src/sockets/socketHandler.js";
 
 // ── Connect to MongoDB ──────────────────────────────────────────────────────
 connectDB();
@@ -16,12 +19,16 @@ connectDB();
 const app = express();
 
 // ── Global Middleware ───────────────────────────────────────────────────────
-app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
-  credentials: true,                  // Allow cookies to be sent
-}));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const ALLOWED_ORIGIN = process.env.CLIENT_URL || "http://localhost:5173";
+
+app.use(
+  cors({
+    origin: ALLOWED_ORIGIN,
+    credentials: true, // Allow cookies (JWT) to be sent
+  })
+);
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 
@@ -42,8 +49,23 @@ app.use((err, _req, res, _next) => {
   res.status(statusCode).json({ success: false, message });
 });
 
+// ── HTTP Server + Socket.IO ──────────────────────────────────────────────────
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: ALLOWED_ORIGIN,
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+// Wire all socket events
+initSocket(io);
+
 // ── Start Server ─────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 4500;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(`🔌 Socket.IO ready`);
 });

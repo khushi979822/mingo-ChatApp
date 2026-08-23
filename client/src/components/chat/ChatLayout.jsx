@@ -1,49 +1,28 @@
+/**
+ * ChatLayout.jsx — Main two-panel layout.
+ * Fully connected to ChatContext — zero hardcoded data.
+ *
+ * Desktop: Sidebar (320px fixed) + Chat window
+ * Mobile: Drawer sidebar + full-screen chat
+ */
+
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { FiMessageCircle, FiMenu } from "react-icons/fi";
 import Sidebar from "./Sidebar";
 import ChatHeader from "./ChatHeader";
 import MessageList from "./MessageList";
-import { CHATS, MESSAGES } from "../../assets/chatDummy";
+import { useChat } from "../../context/ChatContext";
 
-/**
- * ChatLayout — the main WhatsApp-style two-panel layout.
- *
- * Desktop (md+): Sidebar (320px) always visible + full chat window
- * Tablet/Mobile: Sidebar as slide-over drawer, back button in header
- *
- * All local state only — no backend, no API.
- */
 const ChatLayout = () => {
-  const [selectedChatId, setSelectedChatId] = useState("airi");
+  const { selectedUser, setSelectedUser } = useChat();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  // Local messages state per chat (for adding new messages)
-  const [messagesMap, setMessagesMap] = useState({ ...MESSAGES });
-
-  const selectedChat = CHATS.find((c) => c.id === selectedChatId);
-  const messages = messagesMap[selectedChatId] || [];
-
-  const handleSend = (text) => {
-    const now = new Date();
-    const time = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
-    const newMsg = {
-      id: Date.now(),
-      isMe: true,
-      text,
-      time,
-      status: "sent",
-    };
-    setMessagesMap((prev) => ({
-      ...prev,
-      [selectedChatId]: [...(prev[selectedChatId] || []), newMsg],
-    }));
-  };
 
   return (
     <div
       className="flex relative overflow-hidden theme-transition"
       style={{
-        height: "calc(100vh - 52px)", // subtract SiteHeader height
+        height: "calc(100vh - 52px)",
         background: "var(--bg)",
       }}
     >
@@ -51,7 +30,6 @@ const ChatLayout = () => {
       <AnimatePresence>
         {drawerOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -61,7 +39,6 @@ const ChatLayout = () => {
               style={{ background: "rgba(0,0,0,0.45)" }}
               onClick={() => setDrawerOpen(false)}
             />
-            {/* Drawer panel */}
             <motion.div
               initial={{ x: -320 }}
               animate={{ x: 0 }}
@@ -70,8 +47,11 @@ const ChatLayout = () => {
               className="fixed top-0 left-0 bottom-0 z-50 w-[300px] md:hidden shadow-2xl"
             >
               <Sidebar
-                selectedChatId={selectedChatId}
-                onSelectChat={setSelectedChatId}
+                selectedUserId={selectedUser?._id}
+                onSelectUser={(u) => {
+                  setSelectedUser(u);
+                  setDrawerOpen(false);
+                }}
                 onClose={() => setDrawerOpen(false)}
                 isMobileDrawer={true}
               />
@@ -80,7 +60,7 @@ const ChatLayout = () => {
         )}
       </AnimatePresence>
 
-      {/* ── Desktop Sidebar (hidden on mobile) ── */}
+      {/* ── Desktop Sidebar ── */}
       <motion.div
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -89,15 +69,15 @@ const ChatLayout = () => {
         style={{ width: "320px" }}
       >
         <Sidebar
-          selectedChatId={selectedChatId}
-          onSelectChat={setSelectedChatId}
+          selectedUserId={selectedUser?._id}
+          onSelectUser={setSelectedUser}
           isMobileDrawer={false}
         />
       </motion.div>
 
       {/* ── Chat Window ── */}
       <motion.div
-        key={selectedChatId}
+        key={selectedUser?._id || "empty"}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.25 }}
@@ -121,30 +101,17 @@ const ChatLayout = () => {
           >
             <FiMenu size={20} />
           </motion.button>
-          <span
-            className="font-bold text-base"
-            style={{ color: "var(--text)" }}
-          >
+          <span className="font-bold text-base" style={{ color: "var(--text)" }}>
             Mingo
           </span>
         </div>
 
-        {selectedChat ? (
+        {selectedUser ? (
           <>
-            {/* Chat header */}
-            <ChatHeader
-              chat={selectedChat}
-              onBack={() => setDrawerOpen(true)}
-            />
-
-            {/* Messages + input */}
-            <MessageList
-              messages={messages}
-              onSend={handleSend}
-            />
+            <ChatHeader onBack={() => setDrawerOpen(true)} />
+            <MessageList />
           </>
         ) : (
-          // Empty state (shouldn't happen since default is "airi")
           <EmptyState onOpenSidebar={() => setDrawerOpen(true)} />
         )}
       </motion.div>
@@ -153,48 +120,48 @@ const ChatLayout = () => {
 };
 
 // ── EmptyState ────────────────────────────────────────────────────────────────
-
 const EmptyState = ({ onOpenSidebar }) => (
-  <div className="flex-1 flex flex-col items-center justify-center gap-4 px-8 text-center">
+  <div className="flex-1 flex flex-col items-center justify-center gap-5 px-8 text-center">
     <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
+      initial={{ scale: 0.7, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg"
+      className="w-24 h-24 rounded-3xl flex items-center justify-center shadow-2xl"
       style={{
         background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
+        boxShadow: "0 12px 40px var(--glow)",
       }}
     >
-      <FiMessageCircle size={36} color="white" />
+      <FiMessageCircle size={42} color="white" />
     </motion.div>
+
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.2 }}
     >
-      <h3
-        className="text-xl font-bold mb-2"
-        style={{ color: "var(--text)" }}
-      >
-        Select a conversation
+      <h3 className="text-2xl font-bold mb-2" style={{ color: "var(--text)" }}>
+        Welcome to Mingo
       </h3>
-      <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-        Choose a chat from the sidebar to start messaging
+      <p className="text-sm max-w-xs" style={{ color: "var(--text-muted)" }}>
+        Select a conversation from the sidebar or search for someone to start a secure chat.
       </p>
     </motion.div>
+
     <motion.button
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.4 }}
-      whileHover={{ scale: 1.04 }}
+      whileHover={{ scale: 1.04, boxShadow: "0 8px 24px var(--glow)" }}
       whileTap={{ scale: 0.97 }}
       onClick={onOpenSidebar}
-      className="md:hidden mt-2 px-6 py-2.5 rounded-2xl text-white font-semibold text-sm"
+      className="md:hidden mt-1 px-7 py-3 rounded-2xl text-white font-semibold text-sm shadow-lg"
       style={{
         background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
       }}
+      id="start-chat-btn"
     >
-      Open Chats
+      Start New Chat
     </motion.button>
   </div>
 );

@@ -1,22 +1,28 @@
+/**
+ * MessageInput.jsx — Premium message composer.
+ * Connected to ChatContext.sendMessage + emitTyping.
+ * Enter = send, Shift+Enter = new line.
+ * Auto-resizing textarea, emoji picker, typing socket events.
+ */
+
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import {
-  FiSmile,
-  FiPaperclip,
-  FiSend,
-  FiMic,
-} from "react-icons/fi";
+import { FiSmile, FiPaperclip, FiSend, FiMic } from "react-icons/fi";
+import { useChat } from "../../context/ChatContext";
 
-// Quick emoji picker (local state only, no backend)
 const EMOJIS = [
   "😊","😂","🥰","😍","🤣","😭","😅","🙏","🔥","💯",
   "👍","❤️","🎉","✅","👀","😎","🤔","😢","😱","🥳",
   "🚀","✨","🌟","💪","🎊","🤝","👏","😴","🤗","😋",
+  "🫡","🤙","🙌","😤","🫶","💙","💚","🧡","💜","🖤",
+  "🐶","🐱","🦊","🐻","🎸","🎮","🍕","🌮","☕","🧋",
 ];
 
-const MessageInput = ({ onSend }) => {
+const MessageInput = () => {
+  const { sendMessage, emitTyping, emitStopTyping } = useChat();
   const [text, setText] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
+  const [sending, setSending] = useState(false);
   const textareaRef = useRef(null);
   const emojiRef = useRef(null);
 
@@ -24,7 +30,10 @@ const MessageInput = ({ onSend }) => {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`;
+      textareaRef.current.style.height = `${Math.min(
+        textareaRef.current.scrollHeight,
+        120,
+      )}px`;
     }
   }, [text]);
 
@@ -39,19 +48,31 @@ const MessageInput = ({ onSend }) => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const trimmed = text.trim();
-    if (!trimmed) return;
-    onSend(trimmed);
+    if (!trimmed || sending) return;
+    setSending(true);
+    emitStopTyping();
+    await sendMessage(trimmed);
     setText("");
-    // Reset textarea height
     if (textareaRef.current) textareaRef.current.style.height = "auto";
+    setSending(false);
+    textareaRef.current?.focus();
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+    if (e.target.value.trim()) {
+      emitTyping();
+    } else {
+      emitStopTyping();
     }
   };
 
@@ -63,7 +84,7 @@ const MessageInput = ({ onSend }) => {
 
   return (
     <div
-      className="relative px-4 py-3 theme-transition"
+      className="relative px-4 py-3 theme-transition flex-shrink-0"
       style={{
         background: "var(--surface)",
         borderTop: "1px solid var(--border)",
@@ -78,20 +99,20 @@ const MessageInput = ({ onSend }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="absolute bottom-full left-4 mb-2 p-3 rounded-2xl shadow-xl grid grid-cols-10 gap-1.5 z-50"
+            className="absolute bottom-full left-4 mb-2 p-3 rounded-2xl shadow-xl grid grid-cols-10 gap-1 z-50"
             style={{
               background: "var(--surface)",
               border: "1px solid var(--border)",
               boxShadow: "var(--card-shadow)",
-              width: "280px",
+              width: "290px",
             }}
           >
             {EMOJIS.map((emoji) => (
               <button
                 key={emoji}
                 onClick={() => addEmoji(emoji)}
-                className="text-xl hover:scale-125 transition-transform duration-150 cursor-pointer flex items-center justify-center w-7 h-7 rounded-lg hover:bg-opacity-10"
-                style={{ fontSize: "18px" }}
+                className="flex items-center justify-center w-7 h-7 rounded-lg hover:scale-125 transition-transform duration-150 cursor-pointer"
+                style={{ fontSize: "17px" }}
               >
                 {emoji}
               </button>
@@ -107,6 +128,7 @@ const MessageInput = ({ onSend }) => {
           background: "var(--surface-alt)",
           border: "1.5px solid var(--border)",
         }}
+        onFocus={() => {}}
       >
         {/* Emoji button */}
         <motion.button
@@ -114,9 +136,7 @@ const MessageInput = ({ onSend }) => {
           whileTap={{ scale: 0.9 }}
           onClick={() => setShowEmoji((v) => !v)}
           className="flex-shrink-0 p-1.5 rounded-full transition-colors duration-150 cursor-pointer"
-          style={{
-            color: showEmoji ? "var(--primary)" : "var(--text-muted)",
-          }}
+          style={{ color: showEmoji ? "var(--primary)" : "var(--text-muted)" }}
           title="Emoji"
           id="emoji-picker-btn"
         >
@@ -135,23 +155,20 @@ const MessageInput = ({ onSend }) => {
           <FiPaperclip size={19} />
         </motion.button>
 
-        {/* Text input */}
+        {/* Textarea */}
         <textarea
           ref={textareaRef}
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder="Type a message…"
           rows={1}
           id="message-input"
           className="flex-1 bg-transparent outline-none resize-none text-sm leading-5 py-1 max-h-[120px] overflow-y-auto"
-          style={{
-            color: "var(--text)",
-            fontFamily: "inherit",
-          }}
+          style={{ color: "var(--text)", fontFamily: "inherit" }}
         />
 
-        {/* Mic or Send button */}
+        {/* Send / Mic toggle */}
         <AnimatePresence mode="wait" initial={false}>
           {text.trim() ? (
             <motion.button
@@ -162,10 +179,13 @@ const MessageInput = ({ onSend }) => {
               whileHover={{ scale: 1.1, boxShadow: "0 4px 16px var(--glow)" }}
               whileTap={{ scale: 0.92 }}
               onClick={handleSend}
+              disabled={sending}
               className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition-all duration-150"
               style={{
-                background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
+                background:
+                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
                 color: "#ffffff",
+                opacity: sending ? 0.7 : 1,
               }}
               title="Send message"
               id="send-message-btn"
@@ -191,12 +211,12 @@ const MessageInput = ({ onSend }) => {
         </AnimatePresence>
       </div>
 
-      {/* Hint text */}
+      {/* Hint */}
       <p
         className="text-[10px] text-center mt-1.5 select-none"
-        style={{ color: "var(--text-muted)", opacity: 0.6 }}
+        style={{ color: "var(--text-muted)", opacity: 0.5 }}
       >
-        Press Enter to send · Shift+Enter for new line
+        Enter to send · Shift+Enter for new line
       </p>
     </div>
   );

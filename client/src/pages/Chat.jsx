@@ -1,15 +1,13 @@
 import React from "react";
 import ChatLayout from "../components/chat/ChatLayout";
 
-const ChatPage = () => {
-  return (
-    <div
-      className="theme-transition"
-      style={{ background: "var(--bg)", color: "var(--text)" }}
-    >
-      <ChatLayout />
-    </div>
-  );
+/**
+ * Chat page — full-screen chat application.
+ * No site header (ChatLayout owns its own layout).
+ * ChatProvider is injected by App.jsx around this route.
+ */
+const Chat = () => {
+  return <ChatLayout />;
 };
 
-export default ChatPage;
+export default Chat;

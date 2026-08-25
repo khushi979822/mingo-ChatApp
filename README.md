@@ -1,4 +1,4 @@
-Mingo ChatApp by Mern Stack 
+Mingo ChatApp by Mern Stack.
 
 👨‍💻 Author
 Khushi Kumari 

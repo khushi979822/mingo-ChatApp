@@ -40,7 +40,7 @@ export const searchUsers = async (req, res, next) => {
   }
 };
 
-// ── Update profile ────────────────────────────────────────────────────────────
+// ── Update profile ─
 export const updateProfile = async (req, res, next) => {
   try {
     const currentUser = req.user;

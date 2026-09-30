@@ -2,7 +2,7 @@ Mingo ChatApp by Mern Stack.
 
 # 👨‍💻 Author
 
-Khushi Kumari 
+# Khushi Kumari 
 
 Computer Science Engineering Student
 
